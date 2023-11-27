@@ -1,5 +1,11 @@
 use std::hash::{BuildHasher, Hasher};
 
+
+/// A basic Feistel Network cipher.
+/// 
+/// The cipher requires a series of hashes which are built using
+/// a supplied [`std::hash::BuildHasher`] (passed with the parameter
+/// name `bob`, coz it'z a builder, right?)
 pub struct Feistel<B>
 where
     B: BuildHasher,
@@ -13,6 +19,7 @@ impl<B> Feistel<B>
 where
     B: BuildHasher,
 {
+    /// Construct a new Feistel cipher.
     pub fn new(bob: B, bits: usize, keys: &[u64]) -> Feistel<B> {
         // Insist that there are an even number of bits.
         assert_eq!(bits & 1, 0);
@@ -23,6 +30,7 @@ where
         }
     }
 
+    /// Encrypt a value.
     pub fn encrypt(&self, x: u64) -> u64 {
         let (mut l, mut r) = self.split(x);
         for k in self.keys.iter() {
@@ -34,6 +42,7 @@ where
         self.combine(r, l)
     }
 
+    /// Decrypt a value.
     pub fn decrypt(&self, x: u64) -> u64 {
         let (mut l, mut r) = self.split(x);
         for k in self.keys.iter().rev() {
@@ -69,23 +78,10 @@ where
     }
 }
 
-pub struct DefaultBuildHasher {}
-
-impl DefaultBuildHasher {
-    pub fn new() -> DefaultBuildHasher {
-        DefaultBuildHasher {}
-    }
-}
-
-impl BuildHasher for DefaultBuildHasher {
-    type Hasher = std::collections::hash_map::DefaultHasher;
-    fn build_hasher(&self) -> Self::Hasher {
-        std::collections::hash_map::DefaultHasher::new()
-    }
-}
-
 #[cfg(test)]
 mod tests {
+    use crate::DefaultBuildHasher;
+
     use super::*;
 
     #[test]
