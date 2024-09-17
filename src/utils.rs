@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 use std::hash::BuildHasher;
 
 /// A BuildHasher for the standard DefaultHasher.
