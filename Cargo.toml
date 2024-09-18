@@ -1,6 +1,6 @@
 [package]
 name = "feistel-permutation-rs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Constant time, constant space permutations with Feistel Network ciphers."
 license = "GPL-3.0-or-later"
