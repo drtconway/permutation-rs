@@ -24,7 +24,7 @@ where
             k = bob.hash_one(k);
             keys.push(k);
         }
-        println!("keys = {:?}", keys);
+        //println!("keys = {:?}", keys);
 
         // Code assumes an even number of bits. Rounding up
         // increases the constant factor in [`get`] but doesn't
@@ -129,6 +129,19 @@ mod tests {
         xs.sort();
         for i in 0..n {
             assert_eq!(xs[i as usize], i);
+        }
+    }
+
+    #[test]
+    fn test_2() {
+        let n = 1000000;
+        let seed = 29;
+        let perm = Permutation::new(n, seed, DefaultBuildHasher::new());
+        for j in perm.range(100, 200) {
+            println!("{}", j);
+        }
+        for j in perm.iter().take(10) {
+            println!("{}", j);
         }
     }
 }
