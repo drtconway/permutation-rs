@@ -3,7 +3,7 @@ name = "feistel-permutation-rs"
 version = "0.1.1"
 edition = "2021"
 description = "Constant time, constant space permutations with Feistel Network ciphers."
-license = "GPL-3.0-or-later"
+license = "Apache-2.0"
 repository = "https://github.com/drtconway/permutation-rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
