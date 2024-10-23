@@ -109,7 +109,7 @@ mod tests {
 
     #[test]
     fn test_1() {
-        let n = 1000;
+        let n = 1002;
         let bob = xxh64::Xxh64Builder::new(19);
         let perm = Permutation::new(n, 19, bob);
         let mut xs = Vec::new();
