@@ -16,7 +16,7 @@ the required number of items, however this becomes inefficient as the number of 
 and approaches the size of the original vector.
 
 What we present here is an alternative approach which algorithmically generates the permutation without
-actually having to store it. The intuition is straight forward.
+actually having to store it. The intuition is straightforward.
 
 First, let us make the observation that for the purposes of generating a permutation, we don't need the
 items per se, just the indexes of the items: [0, _n_).
@@ -30,7 +30,7 @@ permutation by decrypting.
 Now if _n_ < 2**_b_, it is possible that when we encrypt an index _i_, the encrypted value _j_ could be
 greather than or equal to _n_. However, if _j_ >= _n_, then it will never be a source index, so we can
 encypt _j_ (with the same key), until we get an encrypted value less than _n_. Obviously if _n_ << 2**_b_,
-we may have to do this many time. In fact, we can say the expected number of encryptions required till
+we may have to do this many times. In fact, we can say the expected number of encryptions required till
 we get _j_ < _n_ is 2**_b_ / _n_. So if we choose _b_ such that 2**_b_ is the smallest power of two >= _n_,
 then the average number of encryptions is less than 2.
 
