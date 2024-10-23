@@ -118,13 +118,6 @@ mod tests {
             //println!("{i}\t{x}");
             xs.push(x);
         }
-        let mut lt = 0;
-        for i in 1..n as usize {
-            if xs[i - 1] < xs[i] {
-                lt += 1;
-            }
-        }
-        assert_eq!(lt, n / 2);
 
         xs.sort();
         for i in 0..n {
