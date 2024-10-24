@@ -131,7 +131,7 @@ mod tests {
         // Check the permutation is random.
         let mut sx: f64 = 0.0;
         let mut sx2: f64 = 0.0;
-        for i in 1..n as usize {
+        for i in 0..n as usize {
             let d = (xs[i] as f64) - (i as f64);
             sx += d;
             sx2 += d*d;
