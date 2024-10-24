@@ -107,9 +107,18 @@ mod tests {
 
     use super::*;
 
+    fn triangular_variance(a: f64, b: f64, c: f64) -> f64 {
+        (a*a + b*b + c*c - a*b - a*c - b*c) / 18.0
+    }
+
+    fn triangular_sd(a: f64, b: f64, c: f64) -> f64 {
+        triangular_variance(a, b, c).sqrt()
+    }
+
     #[test]
     fn test_1() {
         let n = 1000;
+        let nf = n as f64;
         let bob = xxh64::Xxh64Builder::new(19);
         let perm = Permutation::new(n, 19, bob);
         let mut xs = Vec::new();
@@ -118,13 +127,22 @@ mod tests {
             //println!("{i}\t{x}");
             xs.push(x);
         }
-        let mut lt = 0;
+
+        // Check the permutation is random.
+        let mut sx: f64 = 0.0;
+        let mut sx2: f64 = 0.0;
         for i in 1..n as usize {
-            if xs[i - 1] < xs[i] {
-                lt += 1;
-            }
+            let d = (xs[i] as f64) - (i as f64);
+            sx += d;
+            sx2 += d*d;
         }
-        assert_eq!(lt, n / 2);
+        let m_bar = sx / nf;
+        assert_eq!(m_bar, 0.0);
+        let v_bar = sx2 / nf - m_bar*m_bar;
+        let sd_bar = v_bar.sqrt();
+        let sd = triangular_sd(-nf, nf, 0.0);
+        let std_error = sd / nf.sqrt();
+        assert!((sd_bar - sd).abs() < std_error);
 
         xs.sort();
         for i in 0..n {
