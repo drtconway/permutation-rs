@@ -36,9 +36,7 @@ where
         let (mut l, mut r) = self.split(x);
         for k in self.keys.iter() {
             l ^= self.hash(*k, r);
-            let t = l;
-            l = r;
-            r = t;
+            (l, r) = (r, l);
         }
         self.combine(r, l)
     }
