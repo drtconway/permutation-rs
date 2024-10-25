@@ -24,6 +24,8 @@ where
     pub fn new(bob: B, bits: usize, keys: &[u64]) -> Feistel<B> {
         // Insist that there are an even number of bits.
         assert_eq!(bits & 1, 0);
+        // Insist on encrypting data that fits in an unsigned 64-bit integer.
+        assert!(bits <= 64);
         Feistel {
             bob,
             bits,
@@ -120,5 +122,35 @@ mod tests {
         let y = f.encrypt(x);
         let z = f.decrypt(y);
         assert_eq!(x, z);
+    }
+
+    #[test]
+    fn test_minimum_bits() {
+        let bob = DefaultBuildHasher::new();
+        let bits = 0;
+        let keys = [0x1c10u64, 0x8fd6u64, 0x2d5au64, 0x7363u64, 0x5f70u64];
+        let f = Feistel::new(bob, bits, &keys);
+        let x = 0;
+        let y = f.encrypt(x);
+        let z = f.decrypt(y);
+        assert_eq!(x, z);
+    }
+
+   #[test]
+   #[should_panic]
+    fn test_odd_bits() {
+        let bob = DefaultBuildHasher::new();
+        let bits = 1;
+        let keys = [0x1c10u64, 0x8fd6u64, 0x2d5au64, 0x7363u64, 0x5f70u64];
+        Feistel::new(bob, bits, &keys);
+    }
+
+   #[test]
+   #[should_panic]
+    fn test_excessive_bits() {
+        let bob = DefaultBuildHasher::new();
+        let bits = 66;
+        let keys = [0x1c10u64, 0x8fd6u64, 0x2d5au64, 0x7363u64, 0x5f70u64];
+        Feistel::new(bob, bits, &keys);
     }
 }
