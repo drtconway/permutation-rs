@@ -60,7 +60,7 @@ where
         PermutationIterator::new(self, begin, end)
     }
 
-    /// Construct an iterator over the subset `begin..end` of the permutation.
+    /// Transform the Permutation into an iterator over the subset `begin..end` of the permutation.
     pub fn into_range(self, begin: u64, end: u64) -> OwnedPermutationIterator<B> {
         assert!(begin <= end);
         assert!(end <= self.n);
@@ -73,7 +73,7 @@ impl<B: std::hash::BuildHasher> IntoIterator for Permutation<B> {
 
     type IntoIter = OwnedPermutationIterator<B>;
 
-    /// Transform the entire Permutation into an iterator.
+    /// Transform the Permutation into an iterator.
     fn into_iter(self) -> Self::IntoIter {
         let end = self.n;
         OwnedPermutationIterator::new(self, 0, end)
